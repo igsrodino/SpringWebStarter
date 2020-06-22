@@ -51,8 +51,17 @@ public class PersonDataAccessService implements PersonDAO{
     }
 
     @Override
-    public int deletePersonById(UUID id) {
-        return 0;
+    public Optional<Person> deletePersonById(UUID id) {
+        final String sql = "DELETE FROM person WHERE id = ?";
+        Person person = jdbcTemplate.queryForObject(
+                sql,
+                new Object[]{id},
+                (resultSet, i) -> {
+                    UUID personID = UUID.fromString(resultSet.getString("id"));
+                    String name = resultSet.getString("name");
+                    return new Person(personID, name);
+                });
+        return Optional.ofNullable(person);
     }
 
     @Override

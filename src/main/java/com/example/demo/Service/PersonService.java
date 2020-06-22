@@ -32,7 +32,7 @@ public class PersonService {
         return personDAO.selectPersonById(id);
     }
 
-    public int deletePerson(UUID id) {
+    public Optional<Person> deletePerson(UUID id) {
         return personDAO.deletePersonById(id);
     }
 
